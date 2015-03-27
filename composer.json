@@ -1,0 +1,9 @@
+{
+	"require" : {
+		"weotch/phpthumb": "dev-master",
+		"dwoo/dwoo": "2.0b1",
+		"adodb/adodb-php": "dev-master",
+		"phpmailer/phpmailer": "dev-master"
+	}
+}
+
