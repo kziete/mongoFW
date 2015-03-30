@@ -12,7 +12,7 @@ class MongoThumb{
 	public $baseUrl;
 
 	public function __construct($url){
-		$this->baseUrl = BASE_DIR . 'public/';
+		$this->baseUrl = BASE_DIR . 'public';
 		$this->cacheDir = BASE_DIR . 'public/archivos/cache/';
 
 		$url = explode('/',$_SERVER['PATH_INFO']);
@@ -75,6 +75,7 @@ class MongoThumb{
 			return true;			
 		} catch (Exception $e) {
 			echo $e->getMessage();
+			return false;
 		}
 	}
 }

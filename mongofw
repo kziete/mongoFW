@@ -2,8 +2,7 @@
 <?php
 #Script Helper de MongoFW 0.1v
 require 'config.php';
-require BASE_DIR . 'core/misc.class.php';
-
+require 'vendor/autoload.php';
 
 if(!isset($argv[1]))
 	error("Debe especificar Una función");
@@ -43,11 +42,6 @@ function sql($argv){
 	}
 	echo $sql;
 }
-
-
-
-
-
 
 function error($mensaje){
 	echo "\n\n############ MongoHelper #######################\n";
