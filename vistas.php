@@ -17,7 +17,7 @@ class Index extends Vista{
 
         $data = $db->fetch($query);
         print_r($data);*/
-        $t = new Tabla1;
+        //$t = new Tabla1;
 
         /*$t->saveData(array(
             //'id' => 1,
@@ -27,7 +27,7 @@ class Index extends Vista{
         //print_r($t->rawData());
     	
 
-        $this->mostrar('home.html',array("header" => 1));
+        $this->mostrar('home.html');
     }
 }
 
