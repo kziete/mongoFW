@@ -1,0 +1,29 @@
+{extends "contenedor_.html"}
+
+{block "content"}
+<ul class="breadcrumb">
+	<li class="pri">Te encuentras en: </li>
+	<li class="active">Admin</li>
+</ul>
+
+<div class="row-fluid">
+	<div class="span9">
+		{foreach $disponibles dispo}
+		<ul class="nav nav-list lista_categoria">
+			
+			<li class="nav-header">{$dispo.categoria}</li>		
+			{foreach $dispo.lista item}
+			<li><a href="/admin/{$item.adminName}">{$item.nombre}</a>
+				{if !$item.bloqueado}
+					<a href="/admin/{$item.adminName}/-1" class="edit_mas"><i class="fa fa-plus"></i></a>
+				{/if}
+			</li>
+			{/foreach}
+
+		</ul>
+		{/foreach}
+	</div>
+	 <div class="span3 visor_right"></div>
+	
+</div>
+{/block}

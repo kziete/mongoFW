@@ -1,0 +1,18 @@
+{extends "contenedor_.html"}
+
+{block "content"}
+<ul class="breadcrumb">
+	<li class="pri">Te encuentras en: </li>
+	<li><a href="/admin">Admin</a> <span class="divider">/</span></li>
+	<li class="active">{$nombre}</li>
+</ul>
+{if !$bloqueado}
+<div class="box_btnnuevo">
+	<a href="/admin/{$modelo}/-1" class="btn btn-success">Nuevo</a>
+</div>
+{/if}
+<br>
+<div class="">
+	{$content}
+</div>
+{/block}

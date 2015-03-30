@@ -1,0 +1,32 @@
+<h2>Contenido número 1</h2>
+<div class="formulario_int">
+	{foreach $includes item}
+		{$item}
+	{/foreach}
+	<form method="post" enctype="multipart/form-data" class="form-horizontal">
+		{if $error}
+		<div class="alert alert-danger">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong>Error!</strong> Por favor, corrija los siguientes errores.
+		</div>
+		{/if}
+		{foreach $campos item}
+		<div class="control-group {if $item.error}error{/if}">
+			<label class="control-label">{$item.nombre}</label>
+			<div class="controls">
+				{$item.input}
+				{if $item.error}
+					<span class="help-inline">{$item.error}</span>
+				{/if}
+			</div>
+		</div>
+		{/foreach}
+		<div class="control-group">
+			<label class="control-label"></label>
+			<div class="controls">
+				<a href="/admin/{$modelo}" class="btn btn-warning">Cancelar</a>
+				<button type="submit" name="aceptar" value="1" class="btn btn-primary">Guardar</button>
+			</div>
+		</div>
+	</form>
+</div>

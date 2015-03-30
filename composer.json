@@ -1,9 +1,13 @@
 {
 	"require" : {
-		"weotch/phpthumb": "dev-master",
 		"dwoo/dwoo": "2.0b1",
-		"adodb/adodb-php": "dev-master",
-		"phpmailer/phpmailer": "dev-master"
-	}
+		"doctrine/dbal": "2.5.1",
+		"phpmailer/phpmailer": "dev-master",
+		"torophp/torophp": "dev-master",
+		"weotch/phpthumb": "dev-master"
+	},
+	"autoload": {
+        "psr-4": {"": "core/"}
+    }
 }
 

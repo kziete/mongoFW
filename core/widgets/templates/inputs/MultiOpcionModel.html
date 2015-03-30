@@ -1,0 +1,16 @@
+{if !$usarSelect}
+	{foreach $opciones item}
+	<label class="checkbox">
+		<input type="checkbox" name="{$item.name}[]" value="{$item.value}" {if $item.checked}checked=""{/if}>
+		{$label}
+	</label>
+	{/foreach}
+{/if}
+
+{if $usarSelect}
+	<select name="{$name}[]" size="{$size}" multiple="">
+		{foreach $opciones item}
+			<option value="{$item.value}" {if $item.checked}selected=""{/if}>{$item.label}</option>
+		{/foreach}
+	</select>
+{/if}

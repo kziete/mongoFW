@@ -1,0 +1,6 @@
+{foreach $opciones item}
+	<label class="checkbox">
+		<input type="checkbox" name="{$name}[]" value="{$item.id}" {if $item.checked}checked=""{/if}>
+		{$item.label}
+	</label>
+{/foreach}
