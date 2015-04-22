@@ -107,6 +107,9 @@ class AdminLista extends AdminVista{
 			return;
 
 		$a = new $modelo();
+		if($_GET['excel'])
+			return $a->streamExcel();
+		
 		$hash = array(
 			'modelo' => $modelo,
 			'content' => $a->getGrid(),
