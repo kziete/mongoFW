@@ -1,4 +1,8 @@
-<?php 
+<?php namespace Modelo;
+
+use Iterator;
+use IteratorAggregate;
+use ArrayAccess;
 
 class ModeloPadre implements IteratorAggregate, ArrayAccess{
 	protected $table;
@@ -50,16 +54,48 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 	public function makeQuery(){
 		$sql = "select * from " . $this->table;
 
-		if(!empty($this->filtros))
-			$sql .= ' where ' . join("=? and ",array_keys($this->filtros)) . "=?";			
-		
+		$params = array();
+		if(!empty($this->filtros)){
+			$where = $this->getWhere($this->filtros);
+			$sql .= $where['where'];
+			$params = $where['params'];
+		}
+		#$sql .= ' where ' . join("=? and ",array_keys($this->filtros)) . "=?";			
 		if($this->orden)
 			$sql .= ' order by ' . $this->orden;
 
 
-		$query = $this->db->sql($sql,$this->filtros);
+		$query = $this->db->sql($sql,$params);
 
 		$this->data = $this->db->fetch($query);
+	}
+
+	public function getWhere($filtros){
+		$wheres = array();
+		$params = array();
+		foreach ($filtros as $field => $value) {
+			$field_parts = explode("__",$field);
+			if($field_parts[1]){
+				switch($field_parts[1]){
+					case 'like':
+						$wheres[] = $field_parts[0] . ' like ?';
+						$params[] = '%' . $value . '%';
+						break;
+
+					case 'gt':
+						$wheres[] = $field_parts[0] . ' > ?';
+						$params[] = $value;
+						break;
+				}
+			}else{
+				$wheres[] = $field . '=?';
+				$params[] = $value;
+			}
+		}
+		return array(
+			'where' => " where " . join(' and ', $wheres),
+			'params' => $params
+		);
 	}
 
 	public function saveData($data){
@@ -101,12 +137,7 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 		$this->data = array();
 	}
 
-	public function getRowsOrderBy($campo='id', $modo='asc'){
-		$sql = "select * from $this->table order by $campo $modo";
-		$query = $this->db->sql($sql);
 
-		return $this->db->fetch($query);
-	}
 	public function getRowsPaged($pagina){
 		$pagina = $pagina ? $pagina : 1;
 		$porpagina = 20;
@@ -126,20 +157,20 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 		}
 		return $this->db->sqlPaginado($sql,$pagina,$porpagina);
 	}
-	public function getById($index){
-		$sql = "select * from " . $this->table  . " where id=" . $index;
-		$query = $this->db->sql($sql);
-		$data = $this->db->fetch($query);
-		return $data[0];
-	}
-	public function getByFilter($filtros){
-		$tmp = array();
-		foreach ($filtros as $k => $v) {
-			$tmp[] = "$k='$v'";
-		}
-		$sql = "select * from " . $this->table  . " where " . join(' and ', $tmp);
-		$query = $this->db->sql($sql);
-		return $this->db->fetch($query);
+	public function getBy($filtros){
+		$sql = "select * from " . $this->table;
+		$where = $this->getWhere($filtros);
+		$sql .= $where['where'];
+
+		$query = $this->db->sql($sql,$where['params']);
+		$rows = $this->db->fetch($query);
+
+		if(count($rows) < 0)
+			throw new Exception("Tupla no encontrada");
+		if(count($rows) > 1)
+			throw new Exception("La query devolvio mas de 1 una tupla");
+
+		return $rows[0];
 	}
 	public function delete($index){
 		$sql = "delete from " . $this->table . " where id=?";
@@ -200,4 +231,54 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 		//print_r($lista);
 		return $lista;
 	}
+}
+
+
+class MyIterator implements Iterator
+{
+    private $var = array();
+    
+    public function __construct($array)
+    {
+        //if (is_array($array)) {
+            $this->var = $array;
+        //}
+
+    }
+
+    public function rewind()
+    {
+        #echo "rewinding\n";
+        reset($this->var);
+    }
+
+    public function current()
+    {
+        $var = current($this->var);
+        #echo "current: $var\n";
+        return $var;
+    }
+
+    public function key()
+    {
+        $var = key($this->var);
+        #echo "key: $var\n";
+        return $var;
+    }
+
+    public function next()
+    {
+        $var = next($this->var);
+        #echo "next: $var\n";
+        return $var;
+    }
+
+    public function valid()
+    {
+        $key = key($this->var);
+        $var = ($key !== NULL && $key !== FALSE);
+        #echo "valid: $var\n";
+        return $var;
+    }
+
 }

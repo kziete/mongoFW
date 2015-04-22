@@ -543,7 +543,7 @@ transition: all 0.5s ease-in-out !important;
 
 .btn_refrescar {
 	height: 30px;
-	width: 100%;
+	width: 50%;
 	background: #fccf50;
 	padding: 0px;
 	margin: 0px;
@@ -557,6 +557,22 @@ transition: all 0.5s ease-in-out !important;
 .btn_refrescar:hover i {
 	color: #fccf50;
 }
+
+.btn_excel {
+	height: 30px;
+	width: 50%;
+	padding: 0px;
+	margin: 0px;
+	float: left;
+}
+.btn_excel i{
+	color: #fff;
+	font-size: 15px;
+	line-height: 30px;
+}
+.btn_excel:hover i {
+}
+
 .td_refre {
 	padding: 4px 0px 0px !important;
 }

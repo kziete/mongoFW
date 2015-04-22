@@ -1,46 +1,6 @@
-<?php 
+<?php namespace Modelo;
 
-class Modelos{
-	public static function id($hash=null){
-		return new IdModel($hash);
-	}
-	public static function text($hash=null){
-		return new TextModel($hash);
-	}
-	public static function textarea($hash=null){
-		return new TextAreaModel($hash);
-	}
-	public static function tinymce($hash=null){
-		return new RichTextModel($hash);
-	}
-	public static function file($hash=null){
-		return new FileModel($hash);
-	}
-	public static function multiFile($hash=null){
-		return new MultiFileModel($hash);
-	}
-	public static function grid($hash=null){
-		return new GridModel($hash);
-	}
-	public static function opcion($hash=null){
-		return new OpcionModel($hash);
-	}
-	public static function multiOpcion($hash=null){
-		return new MultiOpcionModel($hash);
-	}
-	public static function referencia($hash=null){
-		return new ReferenciaModel($hash);
-	}
-	public static function referenciaMultiple($hash=null){
-		return new ReferenciaMultipleModel($hash);
-	}
-	public static function fecha($hash=null){
-		return new FechaModel($hash);
-	}
-	public static function fechayhora($hash=null){
-		return new FechaHoraModel($hash);
-	}
-}
+use duncan3dc\Phpexcel\Excel;
 
 
 class AdminPadre{
@@ -53,7 +13,7 @@ class AdminPadre{
 
 		$this->dwoo = new \Dwoo\Core();
 		$this->dwoo->setCompileDir(BASE_DIR . 'core/admin/templates/cache'); // Folder to store compiled templates
-		$this->dwoo->setTemplateDir(BASE_DIR . 'core/widgets/templates'); // Folder containing .
+		$this->dwoo->setTemplateDir(BASE_DIR . 'core/Modelo/Widgets/templates'); // Folder containing .
 
 		$this->adminName = get_class($this);
 		$this->model = new $this->modelName;
@@ -61,7 +21,7 @@ class AdminPadre{
 	}
 	public function getForm($index,$error=false){
 		if($index != -1){
-			$data =  $this->model->getById($index);
+			$data =  $this->model->getBy(array("id" => $index));
 			if(!$data)
 				echo 'Sacame de Aca';
 		}
@@ -101,7 +61,41 @@ class AdminPadre{
 		);
 		return $this->dwoo->get('genericos/form.html',$output);
 	}
+	public function streamExcel(){
+		if($_GET['filtro']){
+			$filtros = array();
+			foreach ($_GET['filtro'] as $key => $value) {
+				if($value != '')
+					$filtros[$key . '__like'] = $value;
+			}
+			//$filtros['fecha__gt'] = 1;
+			$rows = $this->model->filter($filtros)->rawData();
+		}else{
+        	$rows = $this->model->rawData();
+        }
 
+        #print_r($rows);
+        if(count($rows) > 0){
+            $cabecera = array_keys($rows[0]);
+            $excel = new Excel();
+
+            foreach ($cabecera as $cont => $titulo) {                 
+                $cell = $excel->getCellName($cont, 1);
+                $excel->setCell($cell,$titulo, Excel::BOLD | Excel::CENTER);
+            }
+
+            foreach ($rows as $tcount => $tweet) {
+
+                $col = 0;
+                foreach ($tweet as $key => $value) {                    
+                    $cell = $excel->getCellName($col, ($tcount +2));
+                    $excel->setCell($cell,$value);
+                    $col++;
+                }
+            }
+        	$excel->output(strtolower($this->nombre) . '_' . Date("Y-m-d"));
+        }
+	}
 	public function getGrid(){
 		$paged = $this->model->getRowsPaged($_GET['p']);
 		$data = $this->model->getReferencias($paged['cont']);
@@ -163,52 +157,3 @@ class AdminPadre{
 	}
 }
 
-
-class MyIterator implements Iterator
-{
-    private $var = array();
-    
-    public function __construct($array)
-    {
-        //if (is_array($array)) {
-            $this->var = $array;
-        //}
-
-    }
-
-    public function rewind()
-    {
-        #echo "rewinding\n";
-        reset($this->var);
-    }
-
-    public function current()
-    {
-        $var = current($this->var);
-        #echo "current: $var\n";
-        return $var;
-    }
-
-    public function key()
-    {
-        $var = key($this->var);
-        #echo "key: $var\n";
-        return $var;
-    }
-
-    public function next()
-    {
-        $var = next($this->var);
-        #echo "next: $var\n";
-        return $var;
-    }
-
-    public function valid()
-    {
-        $key = key($this->var);
-        $var = ($key !== NULL && $key !== FALSE);
-        #echo "valid: $var\n";
-        return $var;
-    }
-
-}

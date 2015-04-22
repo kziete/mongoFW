@@ -1,4 +1,4 @@
-<?php 
+<?php namespace Modelo\Widgets;
 
 class WidgetPadre{
 	protected $hash;
@@ -13,10 +13,10 @@ class WidgetPadre{
 
 		// Configure directories
 		$this->dwoo->setCompileDir(BASE_DIR . 'core/admin/templates/cache'); // Folder to store compiled templates
-		$this->dwoo->setTemplateDir(BASE_DIR . 'core/widgets/templates'); // Folder containing .
+		$this->dwoo->setTemplateDir(BASE_DIR . 'core/Modelo/Widgets/templates'); // Folder containing .
 
-		$this->inputTemplate = 'inputs/' . get_class($this) . '.html';
-		$this->outputTemplate = 'outputs/' . get_class($this) . '.html';
+		$this->inputTemplate = 'inputs/' . get_class_name(get_class($this)) . '.html';
+		$this->outputTemplate = 'outputs/' . get_class_name(get_class($this)) . '.html';
 	}
 	public function getNombre($columna){
 		return $this->hash['nombre'] ? $this->hash['nombre'] : $columna;
@@ -61,4 +61,10 @@ class WidgetPadre{
 	public function getAlters($name){
 		return false;
 	}
+}
+
+function get_class_name($classname)
+{
+    if ($pos = strrpos($classname, '\\')) return substr($classname, $pos + 1);
+    return $pos;
 }

@@ -8,6 +8,7 @@ class Index extends Vista{
     	);
 
         $db = new DbHelper;
+        throw new Exception("esta la caga!");
         #$db->insert("test",array("nombre" => 'HOLOLOLO'));
 
         //$db->update("test",array("nombre" => 'Updated'),array('id' => 1));

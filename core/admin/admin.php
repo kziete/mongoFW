@@ -2,6 +2,22 @@
 require(BASE_DIR . 'admin.php');
 
 
+class ErrorVista extends Vista{
+	public function __construct(){
+		parent::__construct();
+
+		$this->dwoo->setCompileDir(BASE_DIR . 'core/admin/templates/cache'); // Folder to store compiled templates
+		$this->dwoo->setTemplateDir(BASE_DIR . 'core/admin/templates'); // Folder containing .
+	}
+	public function excepcion($e){
+		$this->mostrar('excepcion.html',array(
+			'mensaje' => $e->getMessage(),
+			'file' => $e->getFile(),
+			'line' => $e->getLine(),
+			'trace' => $e->getTrace()
+		));
+	}
+}
 
 class AdminVista extends Vista{
 	public function __construct(){

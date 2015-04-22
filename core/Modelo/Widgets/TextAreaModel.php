@@ -1,8 +1,12 @@
-<?php 
+<?php namespace Modelo\Widgets;
 
-class RichTextModel extends WidgetPadre{
+use Modelo\Widgets\WidgetPadre; 
+
+class TextAreaModel extends WidgetPadre{
+	public $max_length;
 	public function __construct($hash){
 		parent::__construct($hash);
+		$this->max_length = $hash['max_length'] ? $hash['max_length'] : 1000;
 	}
 	public function getInput($campo=null,$value=null){
 		$hash = array(
@@ -12,13 +16,7 @@ class RichTextModel extends WidgetPadre{
 		);	
 		return parent::input($hash);
 	}
-	public function getIncludes(){
-		return array(
-			'tinyjs' => '<script type="text/javascript" src="/admin_assets/tinymce/tinymce.min.js"></script>'
-		);
-	}
-	
 	public function getFieldType(){
-		return "text";
+		return 'text';
 	}
 }

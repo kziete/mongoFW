@@ -1,4 +1,7 @@
-<?php 
+<?php  namespace Modelo\Widgets;
+
+use Modelo\Widgets\WidgetPadre;
+
 
 class FechaHoraModel extends WidgetPadre{
 	public $max_length;

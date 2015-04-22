@@ -1,9 +1,6 @@
-<?php 
-/**
-* el $hash usa:
-* @param opciones mapa con los valores y labels de cada opcion
-* @param usarSelect boolean para forzar a que opcionModel se comporte siempre como select
-*/
+<?php namespace Modelo\Widgets;
+
+use Modelo\Widgets\WidgetPadre;
 
 class OpcionModel extends WidgetPadre{
 	public $opciones;

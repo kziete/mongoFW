@@ -1,10 +1,6 @@
-<?php 
-/**
-* el $hash usa:
-* @param opciones mapa con los valores y labels de cada opcion
-* @param usarSelect boolean para forzar a que opcionModel se comporte siempre como select
-* @param size integer tamaño del select, si es que se usara select
-*/
+<?php namespace Modelo\Widgets;
+
+use Modelo\Widgets\WidgetPadre;
 
 class MultiOpcionModel extends WidgetPadre{
 	public $opciones;

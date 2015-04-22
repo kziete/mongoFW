@@ -1,30 +1,22 @@
-<?php 
-####
-## Esta clase es bastarda, por que deberia usarse una tabla intermedia para las relaciones multiples
+<?php namespace Modelo\Widgets;
 
-/**
-* el $hash usa:
-* @param model String con el nombre de la tabla a referenciar
-* @param label String con el campo de la tabla a usar como Label
-*/
+use Modelo\Widgets\WidgetPadre;
 
-class ReferenciaMultipleModel extends WidgetPadre{
+class ReferenciaModel extends WidgetPadre{
 	public function __construct($hash){
 		parent::__construct($hash);
 		$this->model = new $hash['model']();
 		$this->label = $hash['label'];
 	}
-	public function getInput($campo=null,$value){
-
+	public function getInput($campo=null,$value=null){
 		$rows = $this->model->getRows();
 
 		$opciones = array();
-		$values = explode('|', $value);
 		foreach ($rows as $v) {
 			$opciones[] = array(
 				'id' => $v['id'],
 				'label' => $v[$this->label],
-				'checked' => in_array($v['id'], $values)
+				'selected' => $value == $v['id']
 			);
 		}
 
@@ -34,25 +26,6 @@ class ReferenciaMultipleModel extends WidgetPadre{
 			'opciones' => $opciones
 		);	
 		return parent::input($hash);
-	}
-
-	public function getOutput($fila,$name){
-		$value = $fila[$name];
-		if($value){
-
-			$seleccionados = explode('|',$value);
-			$rows = $this->model->getRows();
-			$tmp = array();
-			foreach ($rows as $v) {
-				$tmp[$v['id']] = $v[$this->label];
-			}
-
-			$virtuales = array();
-			foreach ($seleccionados as $v) {
-				$virtuales[] = $tmp[$v];
-			}
-			return join(', ', $virtuales);
-		}
 	}
 	public function getFilter($name,$search){
 		$opciones = $this->model->getRows();
@@ -67,13 +40,20 @@ class ReferenciaMultipleModel extends WidgetPadre{
 		return $html;
 	}
 	public function getCondition($name,$search){
-		return MongoMisc::buscarConPipe($name,$search);
-	}
-	public function prepararDato($name,$value){
-		if($value)
-			return join('|',$value);
+		return $name . "='" . $search . "'";
 	}
 	public function getFieldType(){
-		return "text";
+		return "bigint";
+	}
+	public function getAlters($name){
+		return "ADD CONSTRAINT FOREIGN KEY fk_"
+			. $this->hash['model'] 
+			. " (". $name . ") " 
+			. " REFERENCES " 
+			.  $this->hash['model'] 
+			. "(id) on delete cascade on update cascade;";
+	}
+	public function getOutput($fila,$name){
+		return $fila[$name.'_ref'];
 	}
 }

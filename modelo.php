@@ -1,5 +1,7 @@
 <?php 
 
+use \Modelo\ModeloPadre;
+use \Modelo\Modelos;
 
 class Tabla1 extends ModeloPadre{
 	public function __construct(){

@@ -4,7 +4,7 @@ ini_set('display_errors',1);
 
 define(BASE_DIR, __DIR__ . '/');
 define(HOST, 'localhost');
-define(USER, 'root');
-define(PASSWORD, '');
+define(USER, 'mongo');
+define(PASSWORD, 'mongo');
 define(DATABASE, 'mongo');
 define(DB_DRIVER, 'pdo_mysql');

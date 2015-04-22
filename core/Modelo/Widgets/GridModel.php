@@ -1,4 +1,6 @@
-<?php 
+<?php namespace Modelo\Widgets;
+
+use Modelo\Widgets\WidgetPadre;
 
 class GridModel extends WidgetPadre{
 	

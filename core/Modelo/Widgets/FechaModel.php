@@ -1,10 +1,12 @@
-<?php 
+<?php  namespace Modelo\Widgets;
 
-class TextAreaModel extends WidgetPadre{
+use Modelo\Widgets\WidgetPadre; 
+
+class FechaModel extends WidgetPadre{
 	public $max_length;
 	public function __construct($hash){
 		parent::__construct($hash);
-		$this->max_length = $hash['max_length'] ? $hash['max_length'] : 1000;
+		$this->max_length = $hash['max_length'] ? $hash['max_length'] : 128;
 	}
 	public function getInput($campo=null,$value=null){
 		$hash = array(
@@ -15,6 +17,6 @@ class TextAreaModel extends WidgetPadre{
 		return parent::input($hash);
 	}
 	public function getFieldType(){
-		return 'text';
+		return 'date';
 	}
 }

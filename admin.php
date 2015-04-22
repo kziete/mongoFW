@@ -1,4 +1,6 @@
 <?php
+use \Modelo\AdminPadre;
+
 
 class Tabla1Admin extends AdminPadre{
 	public $model;

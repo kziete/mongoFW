@@ -27,9 +27,11 @@
 				{/foreach}
 				<td class="td_refre">
 					<a href="/admin/{$modelo}" class="btn btn_refrescar">
-						<i class="fa fa-refresh"></i> 
+						<i class="fa fa-eraser"></i> 
 					</a>
-
+					<a href="/admin/{$modelo}/?excel=true{if $url}&{$url}{/if}" class="btn btn_excel">
+						<i class="fa fa-file-text"></i>
+					</a>
 				<button type="submit" class="btn btn-mini btn-oculto">
 					
 				</button>
