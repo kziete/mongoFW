@@ -8,8 +8,8 @@ class Vista{
 		$this->dwoo = new \Dwoo\Core();
 
 		// Configure directories
-		$this->dwoo->setCompileDir(BASE_DIR . '/templates/cache'); // Folder to store compiled templates
-		$this->dwoo->setTemplateDir(BASE_DIR . '/templates'); // Folder containing .
+		$this->dwoo->setCompileDir(BASE_DIR . 'templates/cache'); // Folder to store compiled templates
+		$this->dwoo->setTemplateDir(BASE_DIR . 'templates'); // Folder containing .
 		
 	}
 	public function armar($template,$hash = array()){		
