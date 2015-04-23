@@ -9,11 +9,12 @@ class DbHelper {
 
 		$config = new \Doctrine\DBAL\Configuration(); 
 		$connectionParams = array(
-		    'dbname' => DATABASE,
-		    'user' => USER,
-		    'password' => PASSWORD,
-		    'host' => HOST,
-		    'driver' => DB_DRIVER,
+			'dbname' => DATABASE,
+			'user' => USER,
+			'password' => PASSWORD,
+			'host' => HOST,
+			'driver' => DB_DRIVER,
+			'charset' => 'utf8'
 		);
 		$this->conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
 	}
@@ -46,6 +47,9 @@ class DbHelper {
 		else
 			throw new Exception("No se permiten deletes sin condicion!");
 			
+	}
+	public function lastInsert(){
+		return $this->conn->lastInsertId();
 	}
 
 	public function sqlPaginado($sql,$pagina_actual,$porpagina,$rango=3){

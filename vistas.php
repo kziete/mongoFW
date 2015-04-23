@@ -10,17 +10,16 @@ class Index extends Vista{
         $db = new DbHelper;
         $t = new Tabla1;
 
-        $t->saveData(array());
+        /*$id = $t->saveData(array(
+            "campo1" => 1,
+            "campo3" => 2
+        ));
 
-        #$db->insert("test",array("nombre" => 'HOLOLOLO'));
-
-        //$db->update("test",array("nombre" => 'Updated'),array('id' => 1));
-
-        /*$query = $db->sql("select * from test");
+        echo $id;*/
 
 
-        $data = $db->fetch($query);
-        print_r($data);*/
+
+
         //$t = new Tabla1;
 
         /*$t->saveData(array(

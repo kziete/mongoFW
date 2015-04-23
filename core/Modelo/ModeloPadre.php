@@ -121,8 +121,10 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 		
 		if($data['id']){
 			$this->db->update($this->table,$data,array('id' => $data['id']));
+			return $data['id'];
 		}else{
 			$this->db->insert($this->table,$data);
+			return $this->db->lastInsert();
 		}
 		/*}else
 			$mensajes = "error de válidacion, implementar algo bonito o con mas info";			
