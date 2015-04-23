@@ -31,10 +31,6 @@ class AdminPadre{
 		$camposHtml = array();
 		$includes = array();
 		
-		#$this->model->setIterable(false);
-
-		//print_r(get_object_vars($this->model));
-
 		foreach (get_object_vars($this->model) as $k => $v) {
 			$tmp = $v->getIncludes();
 			foreach ($tmp as $kk => $vv) {
@@ -135,11 +131,9 @@ class AdminPadre{
 			if($index != -1)
 				$grabar['id'] = $index;
 
-			$errores = $this->model->saveData($grabar);
-			if(!$errores)
-				$this->saveOk();
-			else
-				return false;
+			
+			$this->model->saveData($grabar,true);
+			$this->saveOk();
 		}
 	}
 	public function saveOk(){
@@ -151,8 +145,6 @@ class AdminPadre{
 		foreach (get_object_vars($this->model) as $k => $modelo) {
 			$listo[$k] = $modelo->prepararDato($k,$post[$k]);
 		}
-		/*print_r($listo);
-		exit();*/
 		return $listo;
 	}
 }

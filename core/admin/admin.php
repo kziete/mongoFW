@@ -139,14 +139,18 @@ class AdminForm extends AdminVista{
 		$this->mostrar('cascara_form.html', $hash);
 	}
 
-	public function post($modelo,$index){
-		$a = new $modelo(); 
-		if(!$a->save($index)){
+	public function post($modeloAdmin,$index){
+		$a = new $modeloAdmin(); 
+		try{
+			$a->save($index);	
+		}catch(\Excepciones\ExcepcionFormulario $e){
 			$hash = array(
-				'modelo' => $modelo,			
-				'content' => $a->getForm($index,true)
+				'modelo' => $modeloAdmin,			
+				'content' => $a->getForm($index,true),
+				'mensaje' => $e->getMessage(),
+				'nombre' => $a->nombre
 			);
 			$this->mostrar('cascara_form.html', $hash);
-		}		
+		}				
 	}
 }

@@ -12,25 +12,17 @@ class Vista{
 		$this->dwoo->setTemplateDir(BASE_DIR . 'templates'); // Folder containing .
 		
 	}
-	public function armar($template,$hash = array()){		
-		/*$hash['content'] = $this->m->render($template,$hash);
-		echo $this->m->render('contenedor.html',$hash);*/
-	}
-	public function mostrar($template,$hash = array()){		
-		//echo $this->m->render($template,$hash);
 
-		$this->dwoo->output($template, $hash);
-		// ... or get it to use it somewhere else
-		/*$var = $dwoo->get('path/to/index.tpl', $data);
-		echo $var;*/
+	public function mostrar($template,$hash = array()){
+		$this->dwoo->output($template, $hash);		
 	}
-	public function mostrarSinRender($template){
+	/*public function mostrarSinRender($template){
 		echo file_get_contents($this->m->templateDir .$template, FILE_USE_INCLUDE_PATH);
 	}
 
 	public function getModulo($template,$hash = array()){		
 		return $this->m->render($template,$hash);		
-	}
+	}*/
 	public function json($data){
 		header('Content-Type: application/json');
 		echo json_encode($data);

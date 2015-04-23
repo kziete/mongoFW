@@ -29,10 +29,10 @@ class WidgetPadre{
 	}
 	public function validar($value,$name){
 		if($this->hash['notnull'] && $value ==''){
-			$this->error = "Este campo es obligatorio";
-			return false;
+			#$this->error = "Este campo es obligatorio";
+			throw new \Excepciones\ExcepcionCampo("$name es campo obligatorio");
 		}
-		if(method_exists($this, 'validarPropio'))
+		/*if(method_exists($this, 'validarPropio'))
 			if(!$this->validarPropio($value))
 				return false;
 
@@ -41,7 +41,7 @@ class WidgetPadre{
 				return false;
 
 
-		return true;
+		return true;*/
 	}
 	public function prepararDato($name,$value){
 		return $value;

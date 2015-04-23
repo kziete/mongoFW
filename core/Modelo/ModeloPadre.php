@@ -86,6 +86,21 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 						$wheres[] = $field_parts[0] . ' > ?';
 						$params[] = $value;
 						break;
+
+					case 'gte':
+						$wheres[] = $field_parts[0] . ' >= ?';
+						$params[] = $value;
+						break;
+
+					case 'lt':
+						$wheres[] = $field_parts[0] . ' < ?';
+						$params[] = $value;
+						break;
+
+					case 'lte':
+						$wheres[] = $field_parts[0] . ' <= ?';
+						$params[] = $value;
+						break;
 				}
 			}else{
 				$wheres[] = $field . '=?';
@@ -93,23 +108,26 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 			}
 		}
 		return array(
-			'where' => " where " . join(' and ', $wheres),
+			'where' => count($wheres) > 0 ? " where " . join(' and ', $wheres) : "",
 			'params' => $params
 		);
 	}
 
-	public function saveData($data){
-		$mensajes = false;
-		if($this->validar($data)){
-			if($data['id']){
-				$this->db->update($this->table,$data,array('id' => $data['id']));
-			}else{
-				$this->db->insert($this->table,$data);
-			}
-		}else
+	public function saveData($data,$recolectarErrores = false){
+		
+		//$mensajes = false;
+		//if($this->validar($data,$recolectarErrores)){
+		$this->validar($data,$recolectarErrores);
+		
+		if($data['id']){
+			$this->db->update($this->table,$data,array('id' => $data['id']));
+		}else{
+			$this->db->insert($this->table,$data);
+		}
+		/*}else
 			$mensajes = "error de válidacion, implementar algo bonito o con mas info";			
 
-		return $mensajes;
+		return $mensajes;*/
 	}
 	public function getRows(){
 		$this->resetData();
@@ -176,16 +194,26 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 		$sql = "delete from " . $this->table . " where id=?";
 		$query = $this->db->sql($sql,array($index));
 	}
-	public function validar($data){
-		$ok = true;
+	public function validar($data,$recolectarErrores = false){
+		$error = false;
 		foreach (get_object_vars($this) as $k => $v) {
 
-			if(array_key_exists($k,$data) && is_object($v) && method_exists($v, 'validar')){
-				if(!$v->validar($data[$k],$k))
-					$ok = false;
+			if(/*array_key_exists($k,$data) &&*/ is_object($v) && method_exists($v, 'validar')){
+				
+				try{
+					$v->validar($data[$k],$k);
+				}catch(\Excepciones\ExcepcionCampo $e){
+					$error = true;
+					if($recolectarErrores){
+						$v->error = $e->getMessage();
+					}else{
+						throw $e;
+					}					
+				}
 			}
 		}
-		return $ok;
+		if($error)
+			throw new \Excepciones\ExcepcionFormulario("Error de validaciones");
 	}
 	public function getReferencias($data){
 		if(empty($data))
