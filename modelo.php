@@ -22,6 +22,7 @@ class Tabla1 extends ModeloPadre{
 		));
 		$this->campo4 = Modelos::tinymce(array('max_length' => 256));
 		$this->campo5 = Modelos::multiFile();
+		$this->fecha = Modelos::fechayhora();
 		#$this->campo6 = Modelos::grid();
 		parent::__construct();
 	}
