@@ -2,11 +2,11 @@
 	{if $nav_flag}
 	<div class="pagination">
 		<ul>
-			{if $nav}
-				<li {if $actual}class="active"{/if}>
-					<a href="?p={$numero}{if $url}&{$url}{/if}">{$numero}</a>
+			{foreach $nav item}
+				<li {if $item.actual}class="active"{/if}>
+					<a href="?p={$item.numero}{if $url}&{$url}{/if}">{$item.numero}</a>
 				</li>
-			{/if}
+			{/foreach}
 		</ul>
 	</div>
 	{/if}
@@ -60,8 +60,8 @@
 	<div class="pagination">
 		<ul>
 			{foreach $nav item}
-				<li {if $actual}class="active"{/if}>
-					<a href="?p={$numero}{if $url}&{$url}{/if}">{$numero}</a>
+				<li {if $item.actual}class="active"{/if}>
+					<a href="?p={$item.numero}{if $url}&{$url}{/if}">{$item.numero}</a>
 				</li>
 			{/foreach}
 		</ul>

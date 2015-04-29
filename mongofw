@@ -18,7 +18,7 @@ $argv[1]($argv);
 
 function sql($argv){
 
-	require BASE_DIR . 'core/modelo/modeloWrapper.php';
+	require BASE_DIR . 'modelo.php';
 
 	$clases = MongoMisc::file_get_php_classes('modelo.php');
 
