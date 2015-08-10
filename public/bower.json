@@ -1,0 +1,13 @@
+{
+  "name": "Mongo Framework",
+  "version": "0.2.1",
+  "homepage": "https://github.com/kziete/mongoFW-0.2",
+  "description": "Django pobre",
+  "authors": [
+    "Sebastián Díaz"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}
