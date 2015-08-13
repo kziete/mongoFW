@@ -3,6 +3,7 @@
 use Iterator;
 use IteratorAggregate;
 use ArrayAccess;
+use Exception;
 
 class ModeloPadre implements IteratorAggregate, ArrayAccess{
 	protected $table;
@@ -185,7 +186,7 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 		$query = $this->db->sql($sql,$where['params']);
 		$rows = $this->db->fetch($query);
 
-		if(count($rows) < 0)
+		if(count($rows) <= 0)
 			throw new Exception("Tupla no encontrada");
 		if(count($rows) > 1)
 			throw new Exception("La query devolvio mas de 1 una tupla");

@@ -1,3 +1,5 @@
 /vendor
-composer.lock
+/core/admin/templates/cache
+/templates/cache
 /public/bower_components
+composer.lock
