@@ -56,7 +56,7 @@ class DbHelper {
 
 
 		$query = $this->sql($sql);
-		$total = count($this->fetch($query));
+		$total = $query->rowCount(); 
 		$paginas = ceil($total/$porpagina);
 
 		$offset = ($pagina_actual-1)*$porpagina;
