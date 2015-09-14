@@ -8,6 +8,9 @@ class Modelos{
 	}
 	public static function text($hash=null){
 		return new Widgets\TextModel($hash);
+	}	
+	public static function numero($hash=null){
+		return new Widgets\IntegerModel($hash);
 	}
 	public static function textarea($hash=null){
 		return new Widgets\TextAreaModel($hash);
