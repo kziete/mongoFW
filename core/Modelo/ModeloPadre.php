@@ -225,7 +225,7 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 		foreach (get_object_vars($this) as $k => $v) {
 			if(is_object($v))
 				//a futuro poner mas Tipos de modelos que necesiten la misma referenciacion
-				if(in_array(get_class($v), array('ReferenciaModel'))){
+				if(in_array(get_class($v), array('Modelo\Widgets\ReferenciaModel'))){
 					$buscar[$k] = array(
 						'modelo' => $v->model->table,
 						'label' => $v->label,
