@@ -8,7 +8,10 @@
 		"duncan3dc/phpexcel": "dev-master"
 	},
 	"autoload": {
-        "psr-4": {"": "core/"}
+        "psr-4": {
+        	"": "core/",
+        	"App\\" : "App/"
+        }
     }
 }
 

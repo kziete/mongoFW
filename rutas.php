@@ -1,6 +1,6 @@
 <?php 
 Toro::serve(array(
-    "/" => "Index",
+    "/" => "App\Index",
     "/prueba" => "Probando",
     //De sistema, favor no tocar
     "/admin" => "Admin",

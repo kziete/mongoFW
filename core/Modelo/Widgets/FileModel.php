@@ -39,19 +39,19 @@ class FileModel extends WidgetPadre{
 		$nombre = $nombreLimpio = str_replace(' ', '_', $file['name']);
 
 		if($this->hash['folder']){
-			if(!is_dir(BASE_DIR . 'public/archivos/' . $this->hash['folder']))
-				mkdir(BASE_DIR . 'public/archivos/' . $this->hash['folder'], 0777);			
+			if(!is_dir(BASE_DIR . 'archivos/' . $this->hash['folder']))
+				mkdir(BASE_DIR . 'archivos/' . $this->hash['folder'], 0777);			
 
 			$nombre = $nombreLimpio = $this->hash['folder'] . '/' . $nombre ;
 		}
 
-		$path = BASE_DIR . 'public/archivos/' . $nombre;
+		$path = BASE_DIR . 'archivos/' . $nombre;
 		$info = pathinfo($nombreLimpio);
 
 		$i = 0;
 		while (file_exists($path)) {
 			$nombre = $info['dirname'] . '/' . $info['filename'] . '(' . ++$i .').' . $info['extension'] ;
-			$path = BASE_DIR . 'public/archivos/' . $nombre;
+			$path = BASE_DIR . 'archivos/' . $nombre;
 		}
 
 

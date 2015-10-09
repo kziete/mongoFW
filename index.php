@@ -1,6 +1,6 @@
 <?php 
 header("X-Powered-By: Mongo Framework");
-require('../config.php');
+require('config.php');
 
 require(BASE_DIR . 'vendor/autoload.php');
 
@@ -10,7 +10,6 @@ require(BASE_DIR . 'modelo.php');
 
 /*Vistas*/
 require(BASE_DIR . 'core/admin/admin.php');
-include(BASE_DIR . 'vistas.php');
 
 
 /*Router*/
