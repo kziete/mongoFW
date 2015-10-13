@@ -1,6 +1,6 @@
 {
 	"require" : {
-		"dwoo/dwoo": "2.0b1",
+		"twig/twig":"~1.0",
 		"doctrine/dbal": "2.5.1",
 		"phpmailer/phpmailer": "dev-master",
 		"torophp/torophp": "dev-master",
