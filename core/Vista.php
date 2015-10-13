@@ -7,7 +7,7 @@ class Vista{
 		$loader = new Twig_Loader_Filesystem(BASE_DIR . 'templates');
 		$this->twig = new Twig_Environment($loader, array(
 			'cache' => BASE_DIR . 'templates/cache',
-			'debug' => true
+			'debug' => DEBUG_MODE
 		));
 		
 	}

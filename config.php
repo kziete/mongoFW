@@ -8,3 +8,4 @@ define(USER, 'mongo');
 define(PASSWORD, 'mongo');
 define(DATABASE, 'mongo');
 define(DB_DRIVER, 'pdo_mysql');
+define(DEBUG_MODE,true);
