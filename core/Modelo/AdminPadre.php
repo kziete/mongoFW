@@ -11,9 +11,11 @@ class AdminPadre{
 	
 	public function __construct(){		
 
-		$this->dwoo = new \Dwoo\Core();
-		$this->dwoo->setCompileDir(BASE_DIR . 'core/admin/templates/cache'); // Folder to store compiled templates
-		$this->dwoo->setTemplateDir(BASE_DIR . 'core/Modelo/Widgets/templates'); // Folder containing .
+		$loader = new \Twig_Loader_Filesystem(ADMIN_TEMPLATE_DIR);
+		$this->twig = new \Twig_Environment($loader, array(
+			'cache' => ADMIN_TEMPLATE_CACHE_DIR,
+			'debug' => DEBUG_MODE
+		));
 
 		$this->adminName = get_class($this);
 		$this->model = new $this->modelName;
@@ -55,7 +57,7 @@ class AdminPadre{
 			'includes' => $tmp,
 			'error' => $error
 		);
-		return $this->dwoo->get('genericos/form.html',$output);
+		return $this->twig->render('form.html',$output);
 	}
 	public function streamExcel(){
 		if($_GET['filtro']){
@@ -120,7 +122,7 @@ class AdminPadre{
 			'url' => $paged['url'],
 			'bloqueado' => $this->bloqueado
 		);
-		return $this->dwoo->get('genericos/grid.html',$output);
+		return $this->twig->render('grid.html',$output);
 	}
 	public function save($index){		
 		if($_POST['aceptar']){

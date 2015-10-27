@@ -1,6 +1,6 @@
-{foreach $opciones item}
+{% for item in opciones %}
 	<label class="checkbox">
-		<input type="checkbox" name="{$name}[]" value="{$item.id}" {if $item.checked}checked=""{/if}>
-		{$item.label}
+		<input type="checkbox" name="{{name}}[]" value="{{item.id}}" {% if item.checked %}checked=""{% endif %}>
+		{{item.label}}
 	</label>
-{/foreach}
+{% endfor %}

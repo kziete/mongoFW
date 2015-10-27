@@ -1,6 +1,6 @@
 <select name="{$name}">
 	<option value="">Seleccione</option>
-	{foreach $opciones item}
-		<option value="{$item.id}" {if $item.selected}selected=""{/if}>{$item.label}</option>
-	{/foreach}
+	{% for item in opciones %}
+		<option value="{{item.id}}" {% if item.selected %}selected=""{% endif %}>{{item.label}}</option>
+	{% endfor %}
 </select>

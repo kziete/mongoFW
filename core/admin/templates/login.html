@@ -19,12 +19,12 @@
 		<img src="/admin_assets/img/logo_mongo.png" />
 		
 		
-		{if $error}
+		{% if error %}
 		<div class="alert alert-error">
 			<button type="button" class="close" data-dismiss="alert">×</button>
-			<strong>Rayos y Centellas!</strong> {$error}
+			<strong>Rayos y Centellas!</strong> {{error}}
 		</div>
-		{/if}
+		{% endif %}
 		<form method="post">
 			<input class="span4" type="text" name="user" placeholder="usuario"><br>
 			<input class="span4" type="password" name="pass" placeholder="contraseña"><br>

@@ -9,11 +9,12 @@ class WidgetPadre{
 
 	public function __construct($hash){
 		$this->hash = $hash;
-		$this->dwoo = new \Dwoo\Core();
-
-		// Configure directories
-		$this->dwoo->setCompileDir(BASE_DIR . 'core/admin/templates/cache'); // Folder to store compiled templates
-		$this->dwoo->setTemplateDir(BASE_DIR . 'core/Modelo/Widgets/templates'); // Folder containing .
+		
+		$loader = new \Twig_Loader_Filesystem(BASE_DIR . 'core/Modelo/Widgets/templates/');
+		$this->twig = new \Twig_Environment($loader, array(
+			'cache' => ADMIN_TEMPLATE_CACHE_DIR,
+			'debug' => DEBUG_MODE
+		));
 
 		$this->inputTemplate = 'inputs/' . get_class_name(get_class($this)) . '.html';
 		$this->outputTemplate = 'outputs/' . get_class_name(get_class($this)) . '.html';
@@ -22,7 +23,7 @@ class WidgetPadre{
 		return $this->hash['nombre'] ? $this->hash['nombre'] : $columna;
 	}
 	public function input($hash){
-		return $this->dwoo->get($this->inputTemplate, $hash);
+		return $this->twig->render($this->inputTemplate, $hash);
 	}	
 	public function getOutput($fila,$name){
 		return $fila[$name];

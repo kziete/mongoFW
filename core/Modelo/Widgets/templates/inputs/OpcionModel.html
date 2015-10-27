@@ -1,16 +1,16 @@
-{if !$usarSelect}
-	{foreach $opciones item}
+{% if not usarSelect %}
+	{% for item in opciones %}
 	<label class="radio">
-		<input type="radio" name="{$name}" value="{$item.value}" {if $item.checked}checked=""{/if}>
-		{$item.label}
+		<input type="radio" name="{{name}}" value="{{item.value}}" {% if item.checked %}checked=""{% endif %}>
+		{{item.label}}
 	</label>
-	{/foreach}
-{/if}
+	{% endfor %}
+{% endif %}
 
-{if $usarSelect}
-	<select name="{$name}">
-		{foreach $opciones item}
-			<option value="{$item.value}" {if $item.checked}selected=""{/if}>{$item.label}</option>
-		{/foreach}
+{% if usarSelect %}
+	<select name="{{name}}">
+		{% for item in opciones %}
+			<option value="{{item.value}}" {% if item.checked %}selected=""{% endif %}>{{item.label}}</option>
+		{% endfor %}
 	</select>
-{/if}
+{% endif %}

@@ -12,7 +12,7 @@ class Vista{
 		
 	}
 	public function mostrar($template,$hash = array()){		
-		echo $this->twig->render($template,$hash = array());
+		echo $this->twig->render($template,$hash);
 	}
 	public function json($data){
 		header('Content-Type: application/json');

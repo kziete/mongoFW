@@ -1,16 +1,16 @@
-{if !$usarSelect}
-	{foreach $opciones item}
+{% if not usarSelect %}
+	{% for item in opciones %}
 	<label class="checkbox">
-		<input type="checkbox" name="{$item.name}[]" value="{$item.value}" {if $item.checked}checked=""{/if}>
-		{$label}
+		<input type="checkbox" name="{{item.name}}[]" value="{{item.value}}" {% if item.checked %}checked=""{% endif %}>
+		{{label}}
 	</label>
-	{/foreach}
-{/if}
+	{% endfor %}
+{% endif %}
 
-{if $usarSelect}
+{% if usarSelect %}
 	<select name="{$name}[]" size="{$size}" multiple="">
-		{foreach $opciones item}
-			<option value="{$item.value}" {if $item.checked}selected=""{/if}>{$item.label}</option>
-		{/foreach}
+		{% for item in opciones %}
+			<option value="{{item.value}}" {% if item.checked %}selected=""{% endif %}>{% item.label %}</option>
+		{% endfor %}
 	</select>
-{/if}
+{% endif %}

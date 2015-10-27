@@ -1,13 +1,22 @@
 <?php 
 require(BASE_DIR . 'admin.php');
 
-
-class ErrorVista extends Vista{
+class VistaSistema extends Vista{
 	public function __construct(){
 		parent::__construct();
 
-		$this->dwoo->setCompileDir(BASE_DIR . 'core/admin/templates/cache'); // Folder to store compiled templates
-		$this->dwoo->setTemplateDir(BASE_DIR . 'core/admin/templates'); // Folder containing .
+		$loader = new Twig_Loader_Filesystem(BASE_DIR . 'core/admin/templates');
+		$this->twig = new Twig_Environment($loader, array(
+			'cache' => BASE_DIR . 'core/admin/templates/cache',
+			'debug' => DEBUG_MODE
+		));
+	}
+}
+
+
+class ErrorVista extends VistaSistema{
+	public function __construct(){
+		parent::__construct();
 	}
 	public function excepcion($e){
 		$this->mostrar('excepcion.html',array(
@@ -19,16 +28,13 @@ class ErrorVista extends Vista{
 	}
 }
 
-class AdminVista extends Vista{
+class AdminVista extends VistaSistema{
 	public function __construct(){
 
 		//print_r($_SERVER);
 		session_start();
 		//unset($_SESSION['login']);
 		parent::__construct();
-
-		$this->dwoo->setCompileDir(BASE_DIR . 'core/admin/templates/cache'); // Folder to store compiled templates
-		$this->dwoo->setTemplateDir(BASE_DIR . 'core/admin/templates'); // Folder containing .
 
 		$this->revisarPost();
 

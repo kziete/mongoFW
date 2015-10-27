@@ -1,0 +1,70 @@
+<div class="contenedor_tabla">
+	{% if nav_flag %}
+	<div class="pagination">
+		<ul>
+			{% for item in nav %}
+				<li {% if item.actual %}class="active"{% endif %}>
+					<a href="?p={{item.numero}}{% if url %}&{{url}}{% endif %}">{{item.numero}}</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	{% endif %}
+	<form method="get">
+	
+		<table class="table table-bordered table-condensed table-striped table-hover tabla_grilla">
+			<tr class="cabecera_tabla">
+				{% for item in cabecera %}
+					<th>
+						{{item}}
+					</th>
+				{% endfor %}
+				<th></th>
+			</tr>
+			<tr class="filtros">
+				{% for item in filtros %}
+				<td>{{item|raw}}</td>
+				{% endfor %}
+				<td class="td_refre">
+					<a href="/admin/{{modelo}}" class="btn btn_refrescar">
+						<i class="fa fa-eraser"></i> 
+					</a>
+					<a href="/admin/{{modelo}}/?excel=true{% if url %}&{{url}}{% endif %}" class="btn btn_excel">
+						<i class="fa fa-file-text"></i>
+					</a>
+					<button type="submit" class="btn btn-mini btn-oculto">
+						
+					</button>
+				</td>
+			</tr>
+			{% for item in datos %}
+			<tr>
+				{% for otro in item.outputs %}
+					<td>{{otro|raw}}</td>
+				{% endfor %}
+				<td class="iconos_edit">
+					<a href="{{item.edit}}" class="btn_editar h100">
+						<i class="fa fa-pencil-square-o"></i>
+					</a>
+					{% if not item.bloqueado %}
+					<a href="{{item.edit}}?borrar=1" class="btn_eliminar h100" onclick="return confirm('Seguro que desea Eliminar?')">
+						<i class="fa fa-times"></i>
+					</a>
+					{% endif %}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</form>
+	{% if nav_flag %}
+	<div class="pagination">
+		<ul>
+			{% for item in nav %}
+				<li {% if item.actual %}class="active"{% endif %}>
+					<a href="?p={{item.numero}}{% if url %}&{{url}}{% endif %}">{{item.numero}}</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	{% endif %}
+</div>
