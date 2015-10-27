@@ -1,7 +1,7 @@
 <?php 
 Toro::serve(array(
     "/" => "App\Index",
-    "/prueba" => "Probando",
+    "/maquetas/:alpha" => "App\Maquetas",
     //De sistema, favor no tocar
     "/admin" => "Admin",
     "/admin/:alpha" => "AdminLista",
