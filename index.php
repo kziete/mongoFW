@@ -16,7 +16,7 @@ require(BASE_DIR . 'core/admin/admin.php');
 try{
 	require(BASE_DIR . 'rutas.php');
 }catch(Exception $e){
-	echo $e->getMessage();
-	/*$v = new ErrorVista();
-	$v->excepcion($e);*/
+	//echo $e->getMessage();
+	$v = new ErrorVista();
+	$v->excepcion($e);
 }

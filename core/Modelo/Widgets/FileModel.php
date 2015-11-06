@@ -55,7 +55,9 @@ class FileModel extends WidgetPadre{
 		}
 
 
-		move_uploaded_file($file['tmp_name'], $path);
-		return $nombre;
+		if(move_uploaded_file($file['tmp_name'], $path))
+			return $nombre;
+		else
+			throw new \Excepciones\ExcepcionCampo("hubo un problema al guardar el archivo");
 	}
 }

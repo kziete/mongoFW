@@ -12,6 +12,7 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 	protected $data = array();
 	protected $filtros = array();
 	protected $orden;
+	protected $limit;
 
 
 	public function __construct(){
@@ -65,6 +66,9 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 		if($this->orden)
 			$sql .= ' order by ' . $this->orden;
 
+		if($this->limit)
+			$sql .= ' limit ' . $this->limit;
+
 
 		$query = $this->db->sql($sql,$params);
 
@@ -100,6 +104,11 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 
 					case 'lte':
 						$wheres[] = $field_parts[0] . ' <= ?';
+						$params[] = $value;
+						break;
+
+					case 'not':
+						$wheres[] = $field_parts[0] . ' != ?';
 						$params[] = $value;
 						break;
 				}
@@ -139,6 +148,10 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 	public function filter($filtros=array()){
 		$this->resetData();
 		$this->filtros = $filtros;
+		return $this;
+	}
+	public function limit($limit){
+		$this->limit = $limit;
 		return $this;
 	}
 

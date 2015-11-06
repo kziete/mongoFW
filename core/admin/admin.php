@@ -54,7 +54,7 @@ class AdminVista extends VistaSistema{
 			$db = new DbHelper();
 			$user = $db->quote($_POST['user']);
 			$pass = $db->quote($_POST['pass']);
-			$query = $db->sql("select * from mongo_user where user='" . $user . "' and pass='" . $pass . "'");
+			$query = $db->sql("select * from mongo_user where user=? and pass=?",array($user,$pass));
 			$data = $db->fetch($query);
 
 			if(!empty($data)){

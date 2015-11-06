@@ -27,8 +27,11 @@ class AdminPadre{
 			if(!$data)
 				echo 'Sacame de Aca';
 		}
-		if($this->post != null)
-			$data = $this->prepararDatos($this->post);
+		if($this->post != null){
+			try{
+				$data = $this->prepararDatos($this->post);
+			}catch(\Exception $e){};
+		}
 		
 		$camposHtml = array();
 		$includes = array();
@@ -144,9 +147,18 @@ class AdminPadre{
 
 	public function prepararDatos($post){
 		$listo = array();
+		$error = false;
 		foreach (get_object_vars($this->model) as $k => $modelo) {
-			$listo[$k] = $modelo->prepararDato($k,$post[$k]);
+			try{
+				$listo[$k] = $modelo->prepararDato($k,$post[$k]);
+			}catch(\Excepciones\ExcepcionCampo $e){
+				$error = true;
+				$modelo->error = $e->getMessage();
+			}
 		}
+		if($error)
+			throw new \Excepciones\ExcepcionFormulario("Error de validaciones");
+
 		return $listo;
 	}
 }

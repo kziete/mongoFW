@@ -6,5 +6,5 @@ Toro::serve(array(
     "/admin" => "Admin",
     "/admin/:alpha" => "AdminLista",
     "/admin/:alpha/:alpha" => "AdminForm",
-    "/(.*)" => 'Error404'
+    "/(.*)" => 'App\Error404'
 ));

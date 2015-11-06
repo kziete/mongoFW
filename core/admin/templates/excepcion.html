@@ -4,11 +4,11 @@
 	<title></title>
 </head>
 <body>
-<h2>{$mensaje} {$file} {$line}</h2>
+<h2>{{mensaje}} {{file}} {{line}}</h2>
 <ul>
-	{foreach $trace item}
-		<li>{$item.file} {$item.line} {$item.function}</li>
-	{/foreach}
+	{% for item in trace %}
+		<li>{{item.file}} {{item.line}} {{item.function}}</li>
+	{% endfor %}
 </ul>
 
 </body>
