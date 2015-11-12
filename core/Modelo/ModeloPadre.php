@@ -4,8 +4,9 @@ use Iterator;
 use IteratorAggregate;
 use ArrayAccess;
 use Exception;
+use Countable;
 
-class ModeloPadre implements IteratorAggregate, ArrayAccess{
+class ModeloPadre implements IteratorAggregate, ArrayAccess,Countable{
 	protected $table;
 	protected $db;
 
@@ -19,6 +20,14 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 		global $db;
 		$this->db = $db;
 		$this->table = get_class($this);
+	}
+
+	#Countable
+	public function count(){
+		list($sql,$params) = $this->getSql();
+		$query = $this->db->sql($sql);
+		return $query->rowCount();
+
 	}
 
 	#IteratorAggregate
@@ -52,8 +61,17 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 
 
 
-
+	//Corregir este metodo para que devuelva cursor en un futuro cercano
 	public function makeQuery(){
+		list($sql,$params) = $this->getSql();
+
+
+		$query = $this->db->sql($sql,$params);
+
+		$this->data = $this->db->fetch($query);
+	}
+
+	public function getSql(){
 		$sql = "select * from " . $this->table;
 
 		$params = array();
@@ -69,10 +87,7 @@ class ModeloPadre implements IteratorAggregate, ArrayAccess{
 		if($this->limit)
 			$sql .= ' limit ' . $this->limit;
 
-
-		$query = $this->db->sql($sql,$params);
-
-		$this->data = $this->db->fetch($query);
+		return array($sql,$params);
 	}
 
 	public function getWhere($filtros){

@@ -1,6 +1,7 @@
 <?php namespace Modelo;
 
 use duncan3dc\Phpexcel\Excel;
+use Modelo\Utils\Paginador;
 
 
 class AdminPadre{
@@ -98,7 +99,13 @@ class AdminPadre{
         }
 	}
 	public function getGrid(){
-		$paged = $this->model->getRowsPaged($_GET['p']);
+		$pagina = $_GET['p'] ? $_GET['p'] : 1;
+		$tmp = new Paginador($this->model,3,$pagina);
+		$paged = array(
+			'cont' => $tmp->cont,
+			'nav' => $tmp->nav
+		);
+		//$paged = $this->model->getRowsPaged($_GET['p']);
 		$data = $this->model->getReferencias($paged['cont']);
 
 		$ordenado = array();
